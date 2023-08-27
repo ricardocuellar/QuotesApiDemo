@@ -11,4 +11,14 @@ class Quote extends Model
 
     const BORRADOR = 1;
     const PUBLICADO = 2;
+
+    //Relation one to many
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    //Relation one to many inverse
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
