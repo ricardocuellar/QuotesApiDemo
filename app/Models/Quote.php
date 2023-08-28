@@ -9,6 +9,8 @@ class Quote extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','slug'];
+
     const BORRADOR = 1;
     const PUBLICADO = 2;
 
