@@ -33,17 +33,12 @@ class QuoteController extends Controller
             'slug' => 'required|max:255|unique:quotes',
             'body' => 'required'
         ]);
-
-        $request['user_id'] = Auth::id();
-
-        return $request;    
-
-
+        
         $quote = Quote::create([
             'title' => request('title'),
             'slug'  => request('slug'),
             'body' => request('body'),
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::id()
         ]);
         
         return $quote;    
