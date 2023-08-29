@@ -27,11 +27,17 @@ Route::post('register', [RegisterController::class,'store'])->name('api.v1.regis
 Route::post('login', [AuthController::class,'login'])->name('api.v1.login');
 Route::post('forget-password', [AuthController::class, 'forgetPassword'])->name('api.v1.forget-password');
 
+Route::prefix('admin')->middleware(['auth:sanctum','isAdmin'])->group(function(){
+    Route::get('quotes', [QuoteController::class, 'index'])->name('api.v1.quotes.index');
+    Route::post('quotes/{quote}/accept',[QuoteController::class, 'accept'])->name('api.v1.quotes.accept');
+    Route::post('quotes/{quote}/decline',[QuoteController::class, 'decline'])->name('api.v1.quotes.decline');
+    
+});
+
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('logout', [AuthController::class,'logout'])->name('api.v1.logout');
 
-    Route::get('quotes', [QuoteController::class, 'index'])->name('api.v1.quotes.index');
     Route::post('quotes', [QuoteController::class, 'store'])->name('api.v1.quotes.store');
     Route::get('quotes/{quote}',[QuoteController::class, 'show'])->name('api.v1.quotes.show');
     Route::put('quotes/{quote}',[QuoteController::class, 'update'])->name('api.v1.quotes.update');
@@ -39,8 +45,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('quotes/{quote}',[CommentController::class, 'comment'])->name('api.v1.quotes.comment');
 
-    Route::post('quotes/{quote}/accept',[QuoteController::class, 'accept'])->name('api.v1.quotes.accept');
-    Route::post('quotes/{quote}/decline',[QuoteController::class, 'decline'])->name('api.v1.quotes.decline');
+
 
 });
 
