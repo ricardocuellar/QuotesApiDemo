@@ -21,14 +21,27 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
-       
-        $user = User::where('email',$request->email)->first();
+
+        $credentials = $request->only('email','password');
+
+        if (Auth::attempt($credentials)){
+            $user = User::where('email',$request->email)->first();
+            return response()->json([
+                'status' => true,
+                'message' => 'User logged successfully',
+                'data' => $user, 
+                'token' => $user->createToken('API TOKEN')->plainTextToken,
+            ], 200);
+
+        }
+        
         return response()->json([
-            'status' => true,
-            'message' => 'User logged successfully',
-            'data' => $user, 
-            'token' => $user->createToken('API TOKEN')->plainTextToken,
-        ], 200);
+            'status' => false,
+            'message' => 'The email or password are incorrect'
+        ], 404);
+       
+
+        
     }
 
     public function logout(Request $request){
