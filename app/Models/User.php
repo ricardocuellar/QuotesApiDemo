@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use League\CommonMark\Extension\SmartPunct\Quote;
 
 class User extends Authenticatable
 {
@@ -42,4 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    //Relation one to many 
+    public function quotes(){
+        return $this->hasMany(Quote::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }
