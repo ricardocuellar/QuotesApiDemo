@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\QuoteController;
 use App\Http\Controllers\Api\RegisterController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +23,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('register', [RegisterController::class,'store'])->name('api.v1.register');
+Route::post('login', [AuthController::class,'login'])->name('api.v1.login');
+Route::post('forget-password', [AuthController::class, 'forgetPassword'])->name('api.v1.forget-password');
 
-Route::get('quotes', [QuoteController::class, 'index'])->name('api.v1.quotes.index');
-Route::post('quotes', [QuoteController::class, 'store'])->name('api.v1.quotes.store');
-Route::get('quotes/{quote}',[QuoteController::class, 'show'])->name('api.v1.quotes.show');
-Route::put('quotes/{quote}',[QuoteController::class, 'update'])->name('api.v1.quotes.update');
-Route::delete('quotes/{quote}',[QuoteController::class, 'delete'])->name('api.v1.quotes.delete');
+Route::middleware('auth:sanctum')->group(function(){
+
+    Route::post('logout', [AuthController::class,'logout'])->name('api.v1.logout');
+
+    Route::get('quotes', [QuoteController::class, 'index'])->name('api.v1.quotes.index');
+    Route::post('quotes', [QuoteController::class, 'store'])->name('api.v1.quotes.store');
+    Route::get('quotes/{quote}',[QuoteController::class, 'show'])->name('api.v1.quotes.show');
+    Route::put('quotes/{quote}',[QuoteController::class, 'update'])->name('api.v1.quotes.update');
+    Route::delete('quotes/{quote}',[QuoteController::class, 'delete'])->name('api.v1.quotes.delete');
+
+});
+
+
+
 

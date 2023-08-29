@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->text('extract');
             $table->longText('body');
             $table->enum('status', [Quote::BORRADOR, Quote::PUBLICADO])->default(Quote::BORRADOR);
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
