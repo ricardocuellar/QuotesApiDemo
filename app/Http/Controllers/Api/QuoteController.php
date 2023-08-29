@@ -49,8 +49,11 @@ class QuoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Quote $quote)
+    public function show($id)
     {
+
+        $quote = Quote::included()->findOrFail($id);
+
         return $quote;
     }
 
