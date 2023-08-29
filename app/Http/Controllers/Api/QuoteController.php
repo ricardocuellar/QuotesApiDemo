@@ -85,4 +85,18 @@ class QuoteController extends Controller
 
         return $quote;
     }
+
+    public function accept(Quote $quote){
+        $quote->status = Quote::ACCEPTED;
+        $quote->save();
+
+        return $quote;
+    }
+
+    public function decline(Quote $quote){
+        $quote->status = Quote::DECLINE;
+        $quote->save();
+
+        return $quote;
+    }
 }

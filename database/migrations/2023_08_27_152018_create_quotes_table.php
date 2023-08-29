@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->longText('body');
-            $table->enum('status', [Quote::BORRADOR, Quote::PUBLICADO])->default(Quote::BORRADOR);
+            $table->enum('status', [Quote::DRAFT, Quote::ACCEPTED, Quote::DECLINE])->default(Quote::DRAFT);
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->timestamps();
         });
