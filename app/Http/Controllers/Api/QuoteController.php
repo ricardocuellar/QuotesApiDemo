@@ -15,7 +15,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = Quote::all();
+        $quotes = Quote::included()->orderBy('created_at', 'DESC')->filter()->get();
         
         return $quotes;
     }
@@ -49,8 +49,11 @@ class QuoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Quote $quote)
+    public function show($id)
     {
+
+        $quote = Quote::included()->findOrFail($id);
+
         return $quote;
     }
 
