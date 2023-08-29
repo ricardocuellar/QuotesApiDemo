@@ -9,6 +9,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['comment','user_id','quote_id'];
+
     //Relation one to many inverse
     public function user(){
         return $this->belongsTo(User::class);

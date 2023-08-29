@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\QuoteController;
 use App\Http\Controllers\Api\RegisterController;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('quotes/{quote}',[QuoteController::class, 'update'])->name('api.v1.quotes.update');
     Route::delete('quotes/{quote}',[QuoteController::class, 'delete'])->name('api.v1.quotes.delete');
 
+    Route::post('quotes/{quote}',[CommentController::class, 'comment'])->name('api.v1.quotes.comment');
 
     Route::post('quotes/{quote}/accept',[QuoteController::class, 'accept'])->name('api.v1.quotes.accept');
     Route::post('quotes/{quote}/decline',[QuoteController::class, 'decline'])->name('api.v1.quotes.decline');
