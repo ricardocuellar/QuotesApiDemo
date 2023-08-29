@@ -18,6 +18,10 @@ class RegisterController extends Controller
 
         $user = User::create($request->all());
 
-        return response($user, 200);
+        return response()->json([
+            'status' => true,
+            'message' => 'User created successfully',
+            'token' => $user->createToken('API TOKEN')->plainTextToken
+        ],200);
     }
 }

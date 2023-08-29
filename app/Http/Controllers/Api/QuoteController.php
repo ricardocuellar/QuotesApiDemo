@@ -26,25 +26,27 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
 
-        if(Auth::check()){
-            $request['slug'] = Str::slug($request['title'],'-');
-            $request['user_id'] = Auth::id();
-    
-            $request->validate([
-                'title' => 'required|max:255',
-                'slug' => 'required|max:255|unique:quotes',
-                'body' => 'required'
-            ]);
-    
-            return $request;
-            $quote = Quote::create($request->all());
+        $request['slug'] = Str::slug($request['title'],'-');
 
-        }else{
-            return response('You need login to post something', 403);
-        }
-        
+        $request->validate([
+            'title' => 'required|max:255',
+            'slug' => 'required|max:255|unique:quotes',
+            'body' => 'required'
+        ]);
 
+        $request['user_id'] = Auth::id();
+
+        return $request;    
+
+
+        $quote = Quote::create([
+            'title' => request('title'),
+            'slug'  => request('slug'),
+            'body' => request('body'),
+            'user_id' => Auth::user()->id
+        ]);
         
+        return $quote;    
 
 
     }
