@@ -15,7 +15,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = Quote::all();
+        $quotes = Quote::included()->orderBy('created_at', 'DESC')->filter()->get();
         
         return $quotes;
     }

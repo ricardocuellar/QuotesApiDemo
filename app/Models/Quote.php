@@ -12,6 +12,7 @@ class Quote extends Model
 
     protected $fillable = ['title','slug','body','status','user_id'];
     protected $allowIncluded = ['comments'];
+    protected $allowFilter = ['status', 'created_at'];
 
     const DRAFT = 1;
     const ACCEPTED = 2;
@@ -43,5 +44,20 @@ class Quote extends Model
         }
 
         $query->with($relations);
+    }
+
+    public function scopeFilter(Builder $query){
+        if(empty($this->allowFilter) || empty(request('filter'))){
+            return;
+        }
+
+        $filters = request('filter');
+        $allowFilter = collect($this->allowFilter);
+
+        foreach($filters as $filter => $value){
+            if($allowFilter->contains($filter)){
+                $query->where($filter, 'LIKE','%' . $value . '%');
+            }
+        }
     }
 }
