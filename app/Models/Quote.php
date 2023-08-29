@@ -9,10 +9,11 @@ class Quote extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','slug','body','user_id'];
+    protected $fillable = ['title','slug','body','status','user_id'];
 
-    const BORRADOR = 1;
-    const PUBLICADO = 2;
+    const DRAFT = 1;
+    const ACCEPTED = 2;
+    const DECLINE = 3;
 
     //Relation one to many
     public function comments(){
